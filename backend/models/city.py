@@ -1,12 +1,10 @@
-from sqlalchemy import Column, Integer, String
-from sqlalchemy.orm import relationship
-from ..database import Base
+from dataclasses import dataclass
+from typing import List, Optional
+from .city_weather import CityWeather
 
-class City(Base):
-    __tablename__ = 'cities'
-
-    id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, index=True)
-    country = Column(String)
-    # Beziehung zu CityWeather
-    weather_data = relationship("CityWeather", back_populates="city")
+@dataclass
+class City:
+    id: int
+    name: str
+    country: str
+    weather_data: Optional[List[CityWeather]] = None

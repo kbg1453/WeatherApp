@@ -2,8 +2,19 @@
 import streamlit as st
 
 def select_city(cities):
-    city = st.selectbox("Wähle eine Stadt:", cities)
-    return city
+    
+    city_list =[]
+    for city in cities:
+        id,name,country  = city['id'],city['name'],city['country']
+        city_list.append((id,name,country))
+    
+    city_names = [name for  id, name, country in city_list]
+    
+    selected_city_name = st.selectbox("Wähle eine Stadt:", city_names)
+    selected_city_country = next(country for id, name, country in city_list if name == selected_city_name)
+    selected_city_id= next(id for id, name, country in city_list if name == selected_city_name)
+    return selected_city_id,selected_city_name, selected_city_country
+    
 
 def select_language(languages):
     # Splitte die Sprachen in eine Liste von Tupeln (Name, Code)
@@ -18,5 +29,5 @@ def select_language(languages):
     # Finde den Sprachcode, der dem ausgewählten Namen entspricht
     selected_code = next(code for name, code in language_list if name == selected_name)
     
-    return selected_code
+    return selected_name,selected_code
 

@@ -14,9 +14,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 # Registriert die API-Routen
-app.include_router(city_routes.router)
+app.include_router(city_routes.router) 
 app.include_router(city_weather_routes.router)
 
 # Startpunkt der Anwendung

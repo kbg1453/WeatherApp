@@ -1,26 +1,12 @@
-from sqlalchemy import create_engine
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from .config import DATABASE_URL
+from supabase import create_client, Client
+from .config import SUPABASE_KEY,SUPABASE_URL
 
-# Datenbankverbindung
-#engine = create_engine(DATABASE_URL)
-try:
-    engine = create_engine(DATABASE_URL)
-    with engine.connect() as connection:
-        print("Connection successful!")
-except Exception as e:
-    print(f"An error occurred: {e}")
+class Database:
+    _client: Client = None
+    @classmethod
+    def get_client(cls) -> Client:
+        if cls._client is None:
+            cls._client = create_client(SUPABASE_URL, SUPABASE_KEY)
+        return cls._client
 
-SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-Base = declarative_base()
 
-#Base.metadata.create_all(bind=engine)
-
-# Abhängigkeitsfunktion für die Datenbank-Session
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()

@@ -1,9 +1,16 @@
 import os
 from dotenv import load_dotenv
+ 
 
+# Bestimme den Pfad des aktuellen Skriptverzeichnisses
+current_directory = os.path.dirname(os.path.abspath(__file__))
 
-# Lädt Umgebungsvariablen aus einer .env-Datei
-load_dotenv()
+# Konstruiere den vollständigen Pfad zur .env-Datei
+dotenv_path = os.path.join(current_directory, '.env')
+
+# Lade Umgebungsvariablen aus der .env-Datei
+load_dotenv(dotenv_path)
+
 
 # Konfigurationseinstellungen für die Anwendung
 LANGUAGES = os.getenv("LANGUAGES")
